@@ -1,6 +1,6 @@
-import React from "react";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { FaGoogle } from "react-icons/fa";
 
 const GoogleSignin = () => {
   const signInWithGoogle = () => {
@@ -12,7 +12,12 @@ const GoogleSignin = () => {
         // Handle errors
       });
   };
-  return <button onClick={signInWithGoogle}>GoogleSignin</button>;
+  return (
+    <button  onClick={signInWithGoogle} className="m-auto w-2/4 flex items-center justify-center gap-5 p-2 rounded bg-red-500 text-l text-white font-bold cursor-pointer">
+      <FaGoogle />
+      <span>Sign in with Google</span>
+    </button>
+  );
 };
 
 export default GoogleSignin;
