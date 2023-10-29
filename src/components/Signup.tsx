@@ -1,11 +1,16 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import GoogleSignin from "./GoogleSignin";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 interface IFormInput {
-  fullName: string;
+  displayName: string;
   eMail: string;
-  password: number;
-  confirmPassword: number;
+  password: string;
+  confirmPassword: string;
 }
 
 interface SignupProps {
@@ -14,13 +19,30 @@ interface SignupProps {
 }
 
 const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
+  const auth = getAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    createUserWithEmailAndPassword(auth, data.eMail, data.password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        updateProfile(user, {
+          // Use auth.currentUser to access the authenticated user
+          displayName: data.displayName,
+        });
+        console.log("user", user);
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -33,7 +55,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
           <input
             className="border rounded-md pl-4 p-2 w-full"
             type="text"
-            {...register("fullName", {
+            {...register("displayName", {
               required: true,
               validate: {
                 minLength: (v) => v.length >= 5,
@@ -41,17 +63,17 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
               },
             })}
           />
-          {errors.fullName?.type === "required" && (
+          {errors.displayName?.type === "required" && (
             <small className="text-red-600">Username is required</small>
           )}
 
-          {errors.fullName?.type === "minLength" && (
+          {errors.displayName?.type === "minLength" && (
             <small className="text-red-600">
               The username should have at least 5 characters
             </small>
           )}
 
-          {errors.fullName?.type === "matchPattern" && (
+          {errors.displayName?.type === "matchPattern" && (
             <small className="text-red-600">
               Username must contain only letters, numbers and _
             </small>

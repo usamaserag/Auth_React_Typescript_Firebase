@@ -1,8 +1,21 @@
+import { FaSignOutAlt } from "react-icons/fa";
 
-const Navbar = () => {
-  return (
-    <div className="navbar w-full p-4 flex justify-between bg-gray-400 text-white font-bold">Firebase Authentication</div>
-  )
+interface NavbarProps {
+  userName: string | null;
+  handleSignOut: () => void;
 }
 
-export default Navbar
+const Navbar: React.FC<NavbarProps> = ({ userName, handleSignOut }) => {
+  return (
+    <div className="navbar w-full p-4 flex justify-between bg-gray-400 text-white font-bold">
+      <span>Firebase Authentication</span>
+      {userName && (
+        <button onClick={handleSignOut}>
+         <FaSignOutAlt />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Navbar;
