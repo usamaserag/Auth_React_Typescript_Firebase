@@ -35,7 +35,6 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
           // Use auth.currentUser to access the authenticated user
           displayName: data.displayName,
         });
-        console.log("user", user);
       })
       .catch((error) => {
         // const errorCode = error.code;
