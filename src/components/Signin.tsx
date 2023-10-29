@@ -1,10 +1,12 @@
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 interface IFormInput {
   fullName: string;
   eMail: string;
-  password: number;
-  confirmPassword: number;
+  password: string;
+  confirmPassword: string;
 }
 
 interface SigninProps {
@@ -18,7 +20,18 @@ const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const auth = getAuth();
+  try {
+    await signInWithEmailAndPassword(auth, data.eMail, data.password);
+    // Sign-in successful, you can add further actions here if needed
+    console.log("Sign-in successful");
+  } catch (error) {
+    // Handle sign-in errors
+    console.error("Error signing in:", error);
+    throw error; // You can handle the error or propagate it
+  }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
