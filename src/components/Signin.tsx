@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -15,6 +15,7 @@ interface SigninProps {
 }
 
 const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -22,15 +23,14 @@ const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
   } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const auth = getAuth();
-  try {
-    await signInWithEmailAndPassword(auth, data.eMail, data.password);
-    // Sign-in successful, you can add further actions here if needed
-    console.log("Sign-in successful");
-  } catch (error) {
-    // Handle sign-in errors
-    console.error("Error signing in:", error);
-    throw error; // You can handle the error or propagate it
-  }
+    try {
+      await signInWithEmailAndPassword(auth, data.eMail, data.password);
+      console.log("Sign-in successful");
+    } catch (error: any) {
+      if (error) {
+        setErrorMsg("Please check your email and password");
+      }
+    }
   };
   return (
     <form
@@ -70,7 +70,7 @@ const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
           <small className="text-red-600">{errors.password.message}</small>
         )}
       </div>
-
+      <div className="text-red-600">{errorMsg}</div>
       <div className="flex aligns-center gap-10 w-2/4 m-auto">
         <input
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer w-2/4"
