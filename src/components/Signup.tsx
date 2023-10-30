@@ -16,9 +16,10 @@ interface IFormInput {
 interface SignupProps {
   setIsRegister: (isRegister: boolean) => void;
   isRegister: boolean;
+  setUserName: (userName: string) => void
 }
 
-const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
+const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName }) => {
   const auth = getAuth();
   const {
     register,
@@ -35,6 +36,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister }) => {
           // Use auth.currentUser to access the authenticated user
           displayName: data.displayName,
         });
+        setUserName(data.displayName);
       })
       .catch((error) => {
         // const errorCode = error.code;
