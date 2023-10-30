@@ -56,6 +56,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName 
           <input
             className="border rounded-md pl-4 p-2 w-full"
             type="text"
+            placeholder="Enter you name..."
             {...register("displayName", {
               required: true,
               validate: {
@@ -85,6 +86,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName 
           <input
             className="border rounded-md pl-4 p-2 w-full"
             type="email"
+            placeholder="Enter you email..."
             {...register("eMail", {
               required: "Email is required",
               validate: {
@@ -106,6 +108,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName 
           <input
             className="border rounded-md pl-4 p-2 w-full"
             type="password"
+            placeholder="Enter you password..."
             {...register("password", {
               required: "Password is required",
             })}
@@ -119,6 +122,7 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName 
           <input
             className="border rounded-md pl-4 p-2 w-full"
             type="password"
+            placeholder="Re-enter your password..."
             {...register("confirmPassword", {
               required: "Confirm Password is required",
               validate: (value) =>
