@@ -42,6 +42,7 @@ const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
         <input
           className="border rounded-md pl-4 p-2 w-full"
           type="email"
+          placeholder="Enter your email..."
           {...register("eMail", {
             required: "Email is required",
             validate: {
@@ -62,6 +63,7 @@ const Signin: React.FC<SigninProps> = ({ setIsRegister, isRegister }) => {
         <input
           className="border rounded-md pl-4 p-2 w-full"
           type="password"
+          placeholder="Enter your password..."
           {...register("password", {
             required: "Password is required",
           })}

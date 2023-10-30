@@ -40,24 +40,26 @@ function App() {
   };
 
   return (
-    <div className="container m-auto h-screen">
+    <div>
       <Navbar userName={userName} handleSignOut={handleSignOut} />
-      {loading ? (
-        // Display a loading indicator while checking for the userName
-        <Loading />
-      ) : !userName ? (
-        isRegister ? (
-          <Signup
-            setIsRegister={setIsRegister}
-            isRegister={isRegister}
-            setUserName={setUserName}
-          />
+      <div className="container m-auto">
+        {loading ? (
+          // Display a loading indicator while checking for the userName
+          <Loading />
+        ) : !userName ? (
+          isRegister ? (
+            <Signup
+              setIsRegister={setIsRegister}
+              isRegister={isRegister}
+              setUserName={setUserName}
+            />
+          ) : (
+            <Signin setIsRegister={setIsRegister} isRegister={isRegister} />
+          )
         ) : (
-          <Signin setIsRegister={setIsRegister} isRegister={isRegister} />
-        )
-      ) : (
-        <Home userName={userName} />
-      )}
+          <Home userName={userName} />
+        )}
+      </div>
     </div>
   );
 }
