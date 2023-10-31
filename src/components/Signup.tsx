@@ -111,10 +111,16 @@ const Signup: React.FC<SignupProps> = ({ setIsRegister, isRegister, setUserName 
             placeholder="Enter you password..."
             {...register("password", {
               required: "Password is required",
+              validate: {
+                minLength: (v) => v.length >= 6,
+              },
             })}
           />
           {errors.password && (
             <small className="text-red-600">{errors.password.message}</small>
+          )}
+          {errors.password?.type === "minLength" && (
+            <small className="text-red-600">The password should have at least 6 characters</small>
           )}
         </div>
         <div>
