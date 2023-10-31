@@ -11,6 +11,7 @@ function App() {
   const [isRegister, setIsRegister] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
   const auth = getAuth();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
